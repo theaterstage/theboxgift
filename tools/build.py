@@ -24,7 +24,7 @@ ROUTES = ['list'] + ['collection/' + c for c in COLLECTIONS] + ['product/' + p f
 # clean OUT but keep .git
 os.makedirs(OUT, exist_ok=True)
 for n in os.listdir(OUT):
-    if n == '.git': continue
+    if n in ('.git', 'README.md'): continue
     p = os.path.join(OUT, n)
     shutil.rmtree(p) if os.path.isdir(p) and not os.path.islink(p) else os.remove(p)
 shutil.copytree(f'{SRC}/assets', f'{OUT}/assets')
@@ -51,7 +51,7 @@ patch('index-DLFO-8IC.js', [
     ('e.update({basepath:``,serializationAdapters:t})', 'e.update({basepath:`%s`,serializationAdapters:t})' % BP, 1),
     ('{rel:`manifest`,href:`/__grok/manifest.webmanifest`},{rel:`apple-touch-icon`,href:`/__grok/icon-180.png`}',
      '{rel:`manifest`,href:`%smanifest.webmanifest`},{rel:`apple-touch-icon`,href:`%sapple-touch-icon.png`}' % (BASE, BASE), 1),
-    ('href:`/favicon.svg`', 'href:`%sfavicon.svg`' % BASE, 1),
+    ('href:`/favicon.svg`}', 'href:`%sfavicon.svg`},{rel:`icon`,href:`%sfavicon.ico`,sizes:`48x48`}' % (BASE, BASE), 1),
     ('`/assets/styles-C6nPWCr9.css`', '`%sassets/styles-C6nPWCr9.css`' % BASE, 1),
 ])
 # 2) Vite dynamic-import preload base
